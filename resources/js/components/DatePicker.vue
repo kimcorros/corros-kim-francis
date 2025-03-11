@@ -22,7 +22,6 @@ watch(
 );
 
 watch(internalValue, (newVal) => {
-    console.log('DatePicker internal value changed:', newVal);
     emits('update:modelValue', newVal);
 });
 

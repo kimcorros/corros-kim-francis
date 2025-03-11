@@ -15,6 +15,8 @@ interface HomePageProps extends Record<string, any> {
     };
 }
 
+const weekday = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+
 const page = usePage<HomePageProps>();
 const storeHours = computed(() => page.props?.storeHours);
 
@@ -27,14 +29,10 @@ function isStoreOpen(date: Date): boolean {
     const day = date.toLocaleDateString('en-US', { weekday: 'long' });
     const minutesNow = date.getHours() * 60 + date.getMinutes();
 
-    console.log(storeHours.value?.open_days[day.toLowerCase()]);
-
     if (!storeHours.value?.open_days[day.toLowerCase()]) {
         if (day === 'Saturday' && storeHours.value?.alternate_saturday) {
             const oneJan = new Date(date.getFullYear(), 0, 1);
             const weekNumber = Math.ceil(((date.getTime() - oneJan.getTime()) / 86400000 + oneJan.getDay() + 1) / 7);
-
-            console.log(weekNumber);
             if (weekNumber % 2 === 0) return false;
         } else {
             return false;
@@ -65,10 +63,8 @@ const nextOpening = computed(() => {
     if (storeStatus.value === 'Closed') {
         const nextDate = getNextOpeningDate();
         const diffMs = nextDate.getTime() - new Date().getTime();
-        const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-        if (diffDays > 0) return `${diffDays} day(s) from now`;
-        const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
-        return `${diffHours} hour(s) from now`;
+        const diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+        return `${diffDays} day(s) from now`;
     }
     return '';
 });

@@ -6,13 +6,6 @@ use App\Http\Controllers\StoreHoursController;
 use App\Http\Controllers\HomeController;
 use App\Models\StoreHour;
 
-Route::get('/settings/store-hours', function () {
-    $storeHours = StoreHour::first();
-    return Inertia::render('settings/StoreHours', [
-        'storeHours' => $storeHours,
-    ]);
-})->name('settings.store-hours');
-
 Route::post('/settings/store-hours', [StoreHoursController::class, 'update'])
     ->name('settings.store-hours.update');
 

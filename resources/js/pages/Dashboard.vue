@@ -43,8 +43,6 @@ const form = useForm({
     alternateSaturday: storeHours.alternate_saturday,
 });
 
-console.log(form.openingTime);
-
 const submit = () => {
     form.transform((data) => ({
         ...data,
@@ -55,8 +53,6 @@ const submit = () => {
     })).post(route('settings.store-hours.update'), {
         preserveScroll: true,
     });
-
-    console.log(form.openingTime);
 };
 
 const breadcrumbs = [{ title: 'Store Hours', href: '/dashboard' }];
@@ -66,15 +62,15 @@ const breadcrumbs = [{ title: 'Store Hours', href: '/dashboard' }];
     <Head title="Dashboard" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
-        <div class="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
+        <div class="flex flex-col flex-1 h-full gap-4 p-4 rounded-xl">
             <div>
                 <h2 class="mb-12 text-xl font-bold">Update Store Schedule</h2>
                 <form @submit.prevent="submit">
-                    <div class="mb-16 flex items-center space-x-2">
+                    <div class="flex items-center mb-16 space-x-2">
                         <Checkbox v-model:checked="form.alternateSaturday" id="alternateSaturday" />
                         <Label for="alternateSaturday">Open on alternate Saturdays</Label>
                     </div>
-                    <div class="mb-6 flex space-x-4">
+                    <div class="flex mb-6 space-x-4">
                         <div>
                             <Label>Opening Time</Label>
                             <TimePicker :date="form.openingTime" @update:date="(val) => (form.openingTime = val)" />
@@ -84,7 +80,7 @@ const breadcrumbs = [{ title: 'Store Hours', href: '/dashboard' }];
                             <TimePicker :date="form.closingTime" @update:date="(val) => (form.closingTime = val)" />
                         </div>
                     </div>
-                    <div class="mb-12 flex space-x-4">
+                    <div class="flex mb-12 space-x-4">
                         <div>
                             <Label>Lunch Break Start</Label>
                             <TimePicker :date="form.lunchBreakStart" @update:date="(val) => (form.lunchBreakStart = val)" />
@@ -96,7 +92,7 @@ const breadcrumbs = [{ title: 'Store Hours', href: '/dashboard' }];
                     </div>
                     <div class="mb-12">
                         <Label>Open Days</Label>
-                        <div class="mt-6 grid grid-cols-2 gap-2">
+                        <div class="grid grid-cols-2 gap-2 mt-6">
                             <label class="flex items-center space-x-2">
                                 <Checkbox v-model:checked="form.openDays.monday" />
                                 <span>Monday</span>
